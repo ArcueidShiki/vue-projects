@@ -1,13 +1,11 @@
 <template>
     <div id="app">
+        <h2>用户列表</h2>
         <el-container>
-                <el-main>
-                    <h3>我来组成身体</h3>
-
                     <el-table
                             :data="tableData"
                             border
-                            style="width: 100%">
+                            style="">
                         <el-table-column
                                 fixed
                                 prop="id"
@@ -32,7 +30,7 @@
                         <el-table-column
                                 prop="address"
                                 label="地址"
-                                width="300">
+                                >
                         </el-table-column>
                         <el-table-column
                                 fixed="right"
@@ -44,8 +42,8 @@
                             </template>
                         </el-table-column>
                     </el-table>
-                    <input type="text" value="请求数据" @click="created()">
-                </el-main>
+            <br>
+            <hr>
         </el-container>
         <router-view/>
     </div>
@@ -59,13 +57,14 @@
                 tableData:[]
             }
         },
+        created:function() {
+            this.axios.get("http://localhost:18080/user").then((response)=>{
+                console.log(response.data);
+                this.tableData = response.data.data;
+            })
+        } ,
         methods:{
-            created:function () {
-                this.axios.get("http://localhost:18080/user").then((response)=>{
-                    console.log(response.data);
-                    this.tableData = response.data.data;
-                })
-            },handleClick(row) {
+            handleClick(row) {
                 console.log(row);
             }
 

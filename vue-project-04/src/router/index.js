@@ -12,17 +12,26 @@ const routes = [
     children :[
       {
         path:'user/list',
-        component:()=>import('../views/admin/UserListView.vue')
+        component:()=>import('../views/admin/UserListView.vue'),
+        meta:{
+          title:"用户列表"
+        }
       },
       {
         path:'user/add-new',
-        component:() =>import('../views/admin/UserAddNewView.vue')
+        component:() =>import('../views/admin/UserAddNewView.vue'),
+        meta:{
+          title:"添加用户"
+        }
       }
     ]
   },
   {
     path: '/login',
-    component:LoginView
+    component:LoginView,
+    meta:{
+      title:"用户登录"
+    }
   }
 ]
 
@@ -31,5 +40,8 @@ const router = new VueRouter({
   base: process.env.BASE_URL,
   routes
 })
-
+/*路由守卫 每个网址跳转之前 做响应的变化*/
+router.beforeEach((to, from, next) => {  if (to.meta.title) {
+  document.title = to.meta.title  }  next()
+})
 export default router
